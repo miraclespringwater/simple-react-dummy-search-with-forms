@@ -1,5 +1,11 @@
+import GalleryPage from "./pages/GalleryPage";
+
 const App = () => {
-  return <h1>Hello World!</h1>;
-}
+  return (
+    <>
+      <GalleryPage />
+    </>
+  );
+};
 
 export default App;

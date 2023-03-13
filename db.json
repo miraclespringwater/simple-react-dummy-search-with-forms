@@ -1,0 +1,67 @@
+{
+  "clients": [
+    {
+      "id": 1,
+      "name": "Awesome Artist"
+    },
+    {
+      "id": 2,
+      "name": "Cool Company"
+    },
+    {
+      "id": 3,
+      "name": "Rare Rapper"
+    }
+  ],
+  "pieces": [
+    {
+      "id": 1,
+      "clientId": 1,
+      "name": "Cool Cover Art",
+      "date": 20210101,
+      "description": "Consectetur a neque officiis illo nulla Inventore explicabo quisquam nisi ipsum illo porro nobis? Accusamus quidem repudiandae eaque voluptatibus voluptatibus?"
+    },
+    {
+      "id": 2,
+      "clientId": 3,
+      "name": "Awesome Cover Art",
+      "date": 20210113,
+      "description": "Explicabo quisquam nisi ipsum illo porro nobis? Accusamus quidem repudiandae eaque voluptatibus voluptatibus?"
+    },
+    {
+      "id": 3,
+      "clientId": 1,
+      "name": "Rare Cover Art Vibes",
+      "date": 20200226,
+      "description": "Neque officiis illo nulla Inventore ipsum illo porro nobis? Accusamus quidem repudiandae eaque voluptatibus voluptatibus?"
+    },
+    {
+      "id": 4,
+      "clientId": 2,
+      "name": "Very Rare Design",
+      "date": 20191209,
+      "description": "Neque officiis illo nulla Inventore ipsum illo porro nobis? Accusamus quidem repudiandae eaque voluptatibus voluptatibus?"
+    },
+    {
+      "id": 5,
+      "clientId": 3,
+      "name": "Totally Rad",
+      "date": 20180311,
+      "description": "Neque officiis illo nulla Inventore ipsum illo porro nobis? Accusamus quidem repudiandae eaque voluptatibus voluptatibus?"
+    },
+    {
+      "id": 6,
+      "clientId": 2,
+      "name": "Ops Hate Me",
+      "date": 20220527,
+      "description": "Explicabo quisquam nisi ipsum illo porro nobis? Accusamus quidem repudiandae eaque voluptatibus voluptatibus?"
+    },
+    {
+      "id": 7,
+      "clientId": 1,
+      "name": "Sweet Stuff",
+      "date": 20220723,
+      "description": "Consectetur a neque officiis illo nulla Inventore explicabo quisquam nisi ipsum illo porro nobis? Accusamus quidem repudiandae eaque voluptatibus voluptatibus?"
+    }
+  ]
+}
