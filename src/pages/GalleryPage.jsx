@@ -23,12 +23,13 @@ const clients = [
 const GalleryPage = () => {
   const [items, setItems] = useState([]);
 
-  const inputId = useId();
-
   const {
-    filterValues: { selectedClient, selectedSortBy },
+    values: { selectedClient, selectedSortBy },
     register,
-  } = useFilter();
+  } = useFilter({
+    selectedClient: "",
+    selectedSortBy: "",
+  });
 
   const clientOptions = (
     <>
@@ -55,14 +56,10 @@ const GalleryPage = () => {
   return (
     <div>
       <form>
-        <label htmlFor={`${inputId}-client`}>Client Name:</label>
-        <select id={`${inputId}-client`} {...register("selectedClient", "")}>
-          {clientOptions}
-        </select>
-        <label htmlFor={`${inputId}-sortBy`}>Sort By:</label>
-        <select id={`${inputId}-client`} {...register("selectedSortBy", "")}>
-          {sortByOptions}
-        </select>
+        <label>Client Name:</label>
+        <select {...register("selectedClient")}>{clientOptions}</select>
+        <label>Sort By:</label>
+        <select {...register("selectedSortBy")}>{sortByOptions}</select>
       </form>
     </div>
   );

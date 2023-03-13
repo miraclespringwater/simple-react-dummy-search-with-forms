@@ -1,18 +1,9 @@
 import { useMemo, useRef, useState } from "react";
 
-const useFilter = () => {
-  const [filterState, setFilterState] = useState({});
+const useFilter = (initialState) => {
+  const [filterState, setFilterState] = useState(initialState);
 
-  const useRegister = (name, initialValue) => {
-    useMemo(() => {
-      const newValue = { [name]: initialValue };
-      setFilterState((filterState) => {
-        return { ...filterState, ...newValue };
-      });
-    }, [name, initialValue]);
-
-    const ref = useRef();
-
+  const register = (name) => {
     const onChange = (event) => {
       const { value } = event.target;
       const newValue = { [name]: value };
@@ -25,15 +16,12 @@ const useFilter = () => {
       name,
       value: filterState[name],
       onChange,
-      ref,
     };
 
     return returnObj;
   };
 
-  console.log(filterState);
-
-  return { filterValues: filterState, register: useRegister };
+  return { values: filterState, register };
 };
 
 export default useFilter;
