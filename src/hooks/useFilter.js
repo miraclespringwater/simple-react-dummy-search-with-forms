@@ -25,9 +25,10 @@ const useFilter = ({ defaultValues, resetValueWhen }) => {
   };
 
   const register = (name) => {
-    const onChange = () => {
+    const onChange = (event) => {
       const formData = unpackFormData(new FormData(formRef.current));
       const resetData = handleValueResets(formData);
+      console.log("ran onChange for:", event.target.name);
       setFilterState(resetData);
     };
 
@@ -36,6 +37,8 @@ const useFilter = ({ defaultValues, resetValueWhen }) => {
       value: filterState[name],
       onChange,
     };
+
+    // console.log("ran register for:", name);
 
     return returnObj;
   };

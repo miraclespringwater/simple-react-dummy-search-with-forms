@@ -23,7 +23,7 @@ const clients = [
 const formConfig = {
   defaultValues: {
     client: "",
-    sortBy: "",
+    sortBy: "name",
     search: "",
   },
   resetValueWhen: {
@@ -33,6 +33,7 @@ const formConfig = {
 
 const GalleryPage = () => {
   const [items, setItems] = useState([]);
+  const [clients, setClients] = useState([]);
 
   const {
     values: { search, client, sortBy },
@@ -62,6 +63,30 @@ const GalleryPage = () => {
     </>
   );
 
+  useEffect(() => {
+    const fetchClients = async () => {
+      const results = await Clients.getAll();
+
+      setClients(results);
+    };
+
+    fetchClients();
+  }, []);
+
+  useEffect(() => {
+    const fetchPieces = async () => {
+      const params = {
+        ...(client && { client }),
+        ...(sortBy && { _sort: sortBy }),
+        ...(search && { name_like: search }),
+      };
+
+      const results = await Pieces.getAll(params);
+      setItems(results);
+    };
+    fetchPieces();
+  }, [client, sortBy, search]);
+
   return (
     <div>
       <form ref={formRef}>
@@ -76,6 +101,11 @@ const GalleryPage = () => {
         <p>Selected Client: {client}</p>
         <p>Selected Sort: {sortBy}</p>
         <p>Search: {search}</p>
+      </div>
+
+      <div>
+        <h1>Pieces</h1>
+        <GalleryList items={items} />
       </div>
     </div>
   );
