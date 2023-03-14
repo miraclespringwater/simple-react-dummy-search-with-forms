@@ -40,7 +40,13 @@ const useFilter = ({ defaultValues, resetValueWhen }) => {
     return returnObj;
   };
 
-  return { formRef, values: filterState, register: register };
+  const resetField = (field) => {
+    setFilterState((filterState) => {
+      return { ...filterState, [field]: defaultValues[field] };
+    });
+  };
+
+  return { formRef, values: filterState, register: register, resetField };
 };
 
 export default useFilter;

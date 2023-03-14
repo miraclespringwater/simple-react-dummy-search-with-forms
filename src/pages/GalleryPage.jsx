@@ -20,22 +20,25 @@ const clients = [
   },
 ];
 
+const formConfig = {
+  defaultValues: {
+    client: "",
+    sortBy: "",
+    search: "",
+  },
+  resetValueWhen: {
+    sortBy: (formData) => formData.client && formData.sortBy === "client",
+  },
+};
+
 const GalleryPage = () => {
   const [items, setItems] = useState([]);
 
   const {
-    values: { client, sortBy },
+    values: { search, client, sortBy },
     register,
     formRef,
-  } = useFilter({
-    defaultValues: {
-      client: "",
-      sortBy: "",
-    },
-    resetValueWhen: {
-      sortBy: (formData) => formData.client && formData.sortBy === "client",
-    },
-  });
+  } = useFilter(formConfig);
 
   const clientOptions = (
     <>
@@ -66,10 +69,13 @@ const GalleryPage = () => {
         <select {...register("client")}>{clientOptions}</select>
         <label>Sort By:</label>
         <select {...register("sortBy")}>{sortByOptions}</select>
+        <label>Search:</label>
+        <input type="text" {...register("search")} />
       </form>
       <div>
         <p>Selected Client: {client}</p>
         <p>Selected Sort: {sortBy}</p>
+        <p>Search: {search}</p>
       </div>
     </div>
   );
