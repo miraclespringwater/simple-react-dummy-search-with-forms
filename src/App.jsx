@@ -1,4 +1,4 @@
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, useFormikContext } from "formik";
 import { useEffect, useState } from "react";
 import Clients from "./api/Clients";
 import Pieces from "./api/Pieces";
@@ -6,6 +6,15 @@ import Pieces from "./api/Pieces";
 const App = () => {
   const [clients, setClients] = useState([]);
   const [pieces, setPieces] = useState([]);
+
+  const GetPieces = () => {
+    const { values, submitForm } = useFormikContext();
+    useEffect(() => {
+      fetchPieces(values);
+    }, [values]);
+
+    return null;
+  };
 
   const fetchClients = async () => {
     const results = await Clients.getAll();
@@ -36,40 +45,42 @@ const App = () => {
           fetchPieces(values);
         }}
       >
-        <Form>
-          <label>Client Name:</label>
-          <Field as="select" name="clientId">
-            <option value="">All</option>
-            {clients.map((client) => {
+        <div>
+          <Form>
+            <label>Client Name:</label>
+            <Field as="select" name="clientId">
+              <option value="">All</option>
+              {clients.map((client) => {
+                return (
+                  <option key={client.id} value={client.id}>
+                    {client.name}
+                  </option>
+                );
+              })}
+            </Field>
+            <label>Sort By:</label>
+            <Field as="select" name="sortBy">
+              <option value="date">Date</option>
+              <option value="client">Client</option>
+              <option value="name">Name</option>
+            </Field>
+            <label>Search:</label>
+            <Field type="text" name="search" placeholder="Search" />
+            <button type="submit">Submit</button>
+          </Form>
+          <div>
+            <h2>Pieces</h2>
+            <GetPieces />
+            {pieces.map((piece) => {
               return (
-                <option key={client.id} value={client.id}>
-                  {client.name}
-                </option>
+                <p key={piece.id}>
+                  {piece.clientId}-{piece.name}
+                </p>
               );
             })}
-          </Field>
-          <label>Sort By:</label>
-          <Field as="select" name="sortBy">
-            <option value="date">Date</option>
-            <option value="client">Client</option>
-            <option value="name">Name</option>
-          </Field>
-          <label>Search:</label>
-          <Field type="text" name="search" placeholder="Search" />
-          <button type="submit">Submit</button>
-        </Form>
+          </div>
+        </div>
       </Formik>
-
-      <div>
-        <h2>Pieces</h2>
-        {pieces.map((piece) => {
-          return (
-            <p key={piece.id}>
-              {piece.clientId}-{piece.name}
-            </p>
-          );
-        })}
-      </div>
     </div>
   );
 };
