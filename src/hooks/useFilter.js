@@ -1,15 +1,34 @@
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, useId } from "react";
 
-const useFilter = (initialState) => {
-  const [filterState, setFilterState] = useState(initialState);
+const unpackFormData = (formData) => {
+  const unpacked = {};
+
+  Array.from(formData.entries()).forEach((entry) => {
+    unpacked[entry[0]] = entry[1];
+  });
+
+  return unpacked;
+};
+
+const useFilter = ({ defaultValues, resetValueWhen }) => {
+  const [filterState, setFilterState] = useState(defaultValues);
+  const formRef = useRef(null);
+
+  const handleValueResets = (formData) => {
+    const returnData = { ...formData };
+    Object.keys(formData).forEach((key) => {
+      if (resetValueWhen[key] && resetValueWhen[key](formData)) {
+        returnData[key] = defaultValues[key];
+      }
+    });
+    return returnData;
+  };
 
   const register = (name) => {
-    const onChange = (event) => {
-      const { value } = event.target;
-      const newValue = { [name]: value };
-      setFilterState((filterState) => {
-        return { ...filterState, ...newValue };
-      });
+    const onChange = () => {
+      const formData = unpackFormData(new FormData(formRef.current));
+      const resetData = handleValueResets(formData);
+      setFilterState(resetData);
     };
 
     const returnObj = {
@@ -21,7 +40,7 @@ const useFilter = (initialState) => {
     return returnObj;
   };
 
-  return { values: filterState, register };
+  return { formRef, values: filterState, register: register };
 };
 
 export default useFilter;

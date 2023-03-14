@@ -24,11 +24,17 @@ const GalleryPage = () => {
   const [items, setItems] = useState([]);
 
   const {
-    values: { selectedClient, selectedSortBy },
+    values: { client, sortBy },
     register,
+    formRef,
   } = useFilter({
-    selectedClient: "",
-    selectedSortBy: "",
+    defaultValues: {
+      client: "",
+      sortBy: "",
+    },
+    resetValueWhen: {
+      sortBy: (formData) => formData.client && formData.sortBy === "client",
+    },
   });
 
   const clientOptions = (
@@ -47,7 +53,7 @@ const GalleryPage = () => {
   const sortByOptions = (
     <>
       <option value="">...</option>
-      {!selectedClient && <option value="client">Client</option>}
+      {!client && <option value="client">Client</option>}
       <option value="name">Name</option>
       <option value="date">Date</option>
     </>
@@ -55,12 +61,16 @@ const GalleryPage = () => {
 
   return (
     <div>
-      <form>
+      <form ref={formRef}>
         <label>Client Name:</label>
-        <select {...register("selectedClient")}>{clientOptions}</select>
+        <select {...register("client")}>{clientOptions}</select>
         <label>Sort By:</label>
-        <select {...register("selectedSortBy")}>{sortByOptions}</select>
+        <select {...register("sortBy")}>{sortByOptions}</select>
       </form>
+      <div>
+        <p>Selected Client: {client}</p>
+        <p>Selected Sort: {sortBy}</p>
+      </div>
     </div>
   );
 };
